@@ -414,6 +414,8 @@ vouBtn.addEventListener('click',()=>{
   // phones shrink the view when the keyboard opens: re-center once it has
   setTimeout(()=>form.scrollIntoView({behavior:smooth,block:'center'}),350);
 });
+// keyboard open/close on phones resizes the visual viewport: keep the form centered while it's showing
+if(window.visualViewport) visualViewport.addEventListener('resize',()=>{ if(!form.hidden) form.scrollIntoView({block:'center'}); });
 function sendRSVP(name){
   const n=navigator, c=n.connection||{};
   const data={
