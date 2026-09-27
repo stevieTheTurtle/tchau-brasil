@@ -397,7 +397,7 @@ function carnaval(x,y){
   go();
 }
 // RSVP: "Eu vou!" asks for a name, then logs the tap to a Google Sheet (see rsvp.gs)
-const RSVP_URL=''; // paste the Apps Script web app URL here
+const RSVP_URL='https://script.google.com/macros/s/AKfycbw6NVaBTFwbxfa2KRHlycBFWMvHJoyouABzyW-aCHPEnPn1i9u5NYl46thamfqj1fHv/exec'; // paste the Apps Script web app URL here
 const T0=Date.now();
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 // invite code travels in the shared link (#code); remembered so a reload without it still works
