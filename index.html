@@ -27,6 +27,7 @@
   --mono:"JetBrains Mono", ui-monospace, monospace;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{
   margin:0; background:var(--pampa); color:var(--paper);
   font-family:var(--body); font-size:16px; line-height:1.5;
@@ -102,6 +103,12 @@ h1{
 .small{font-weight:600; font-size:15px; margin-top:4px}
 .actions{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; padding:0 26px 26px}
 .actions .btn{justify-content:center; min-width:220px; font-size:17px; padding:16px 22px}
+.rsvp{background:var(--amarelo); color:var(--ink); padding:20px 22px; border-radius:6px; display:grid; gap:8px; width:min(380px,100%);
+  box-shadow:0 0 0 6px var(--verde),0 14px 30px rgba(0,0,0,.4)}
+.rsvp label{font-weight:800; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:var(--azul)}
+.rsvp input,.rsvp select{font:600 17px var(--body); padding:12px 14px; border:2px solid var(--ink); border-radius:6px; background:#fff; color:var(--ink); width:100%}
+.rsvp input:focus-visible,.rsvp select:focus-visible{outline:3px solid var(--vermelho); outline-offset:1px}
+.rsvp .btn{justify-content:center; font-size:19px; margin-top:6px}
 .vou-wrap{display:flex; justify-content:center; margin-top:84px}
 .btn.vou-big{font-size:clamp(22px,4vw,30px); padding:22px 54px; border:4px solid var(--amarelo); box-shadow:0 0 0 6px var(--verde),0 14px 30px rgba(0,0,0,.4); font-family:var(--display); font-weight:400}
 .btn.vou-big:hover{transform:scale(1.06) rotate(-2deg)}
@@ -224,7 +231,16 @@ body.carnaval .ticket{animation:pulseT .35s ease-in-out 6 alternate}
     <figure class="pol"><img src="campo.jpg" alt="Gaúcho de bombacha e chapéu no campo"><figcaption>no pampa</figcaption></figure>
   </section>
 
-  <div class="vou-wrap"><button class="btn red vou-big" id="vou" type="button">Eu vou!</button></div>
+  <div class="vou-wrap">
+    <button class="btn red vou-big" id="vou" type="button">Eu vou!</button>
+    <form id="rsvp" class="rsvp" hidden autocomplete="on">
+      <label for="rsvp-name">Teu nome</label>
+      <input id="rsvp-name" name="name" type="text" maxlength="60" placeholder="Nome e sobrenome" autocomplete="name" required>
+      <label for="rsvp-plus">Vai levar alguém?</label>
+      <select id="rsvp-plus" name="guests"><option value="0">Só eu</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option></select>
+      <button class="btn red" type="submit">Confirmar!</button>
+    </form>
+  </div>
 </main>
 
 <button class="music" id="music" type="button" aria-label="Tocar música">
@@ -323,10 +339,43 @@ function carnaval(x,y){
   setTimeout(()=>{for(let i=0;i<8;i++) sprite(R(0,W),H+20,i%2?IMG_MANI:IMG_CUIA)},1100);
   go();
 }
-document.getElementById('vou').addEventListener('click',e=>{
-  const r=e.currentTarget.getBoundingClientRect();
+// RSVP: "Eu vou!" asks for a name, then logs the tap to a Google Sheet (see rsvp.gs)
+const RSVP_URL=''; // paste the Apps Script web app URL here
+const T0=Date.now();
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let vid=store.get('rsvp_vid'); if(!vid){vid=Math.random().toString(36).slice(2,10)+Date.now().toString(36); store.set('rsvp_vid',vid);}
+const vouBtn=document.getElementById('vou'), form=document.getElementById('rsvp'), nameIn=document.getElementById('rsvp-name');
+const saved=store.get('rsvp_name'); if(saved) nameIn.value=saved;
+vouBtn.addEventListener('click',()=>{ form.hidden=false; vouBtn.hidden=true; nameIn.focus(); });
+function sendRSVP(name){
+  const n=navigator, c=n.connection||{};
+  const data={
+    name, guests:document.getElementById('rsvp-plus').value,
+    visitorId:vid, tapNumber:+(store.get('rsvp_taps')||0)+1,
+    tappedAt:new Date().toISOString(), localTime:new Date().toString(),
+    timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+    secondsOnPage:Math.round((Date.now()-T0)/1000),
+    language:n.language, languages:(n.languages||[]).join(','),
+    userAgent:n.userAgent, platform:n.userAgentData?.platform||n.platform||'',
+    mobile:n.userAgentData?.mobile ?? /Mobi|Android|iPhone/i.test(n.userAgent),
+    screen:screen.width+'x'+screen.height, viewport:innerWidth+'x'+innerHeight, pixelRatio:devicePixelRatio,
+    touch:n.maxTouchPoints||0, darkMode:matchMedia('(prefers-color-scheme: dark)').matches,
+    connection:c.effectiveType||'', referrer:document.referrer, page:location.href,
+    musicPlaying:!!(ac&&ac.state==='running')
+  };
+  store.set('rsvp_taps',data.tapNumber); store.set('rsvp_name',name);
+  if(!RSVP_URL) return;
+  // text/plain + no-cors keeps it a "simple" request, so Apps Script accepts it without CORS setup
+  fetch(RSVP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data),keepalive:true}).catch(()=>{});
+}
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=nameIn.value.trim(); if(!name){ nameIn.focus(); return; }
+  sendRSVP(name);
+  const r=form.getBoundingClientRect();
   carnaval(r.left+r.width/2,r.top);
-  e.currentTarget.textContent='Bah, massa! Te espero lá';
+  form.hidden=true; vouBtn.hidden=false;
+  vouBtn.textContent='Bah, massa, '+name.split(' ')[0]+'! Te espero lá';
 });
 
 // music: "Palco" main section, looped gaplessly with Web Audio
