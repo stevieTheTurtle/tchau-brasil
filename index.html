@@ -3,11 +3,68 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Tchau, Brasil! Festa de despedida · 3 de outubro, 20h30 · SANDO, Porto Alegre">
-<meta property="og:title" content="Tchau, Brasil!">
-<meta property="og:description" content="Festa de despedida · Sábado, 3 de outubro, 20h30 · SANDO, Porto Alegre">
-<meta property="og:image" content="campo.jpg">
-<title>Tchau, Brasil</title>
+<title>🧉 Tchau, Brasil! · Festa 03/10 🇧🇷</title>
+<meta name="description" content="🧉 Festa de despedida · Sábado, 3 de outubro, 20h30 até fechar · SANDO, Av. Independência 1211, Porto Alegre 🇧🇷">
+<meta name="author" content="stevieTheTurtle">
+<meta name="theme-color" content="#0b3d24">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://stevietheturtle.github.io/tchau-brasil/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧉</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Tchau, Brasil!">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<!-- link previews: WhatsApp, Telegram, Instagram, Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tchau, Brasil!">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://stevietheturtle.github.io/tchau-brasil/">
+<meta property="og:title" content="🧉 Tchau, Brasil! Festa de despedida 🇧🇷">
+<meta property="og:description" content="Sábado, 3 de outubro · 20h30 até fechar · SANDO, Porto Alegre. Bah, tchê, bora!">
+<meta property="og:image" content="https://stevietheturtle.github.io/tchau-brasil/og-image.jpg">
+<meta property="og:image:secure_url" content="https://stevietheturtle.github.io/tchau-brasil/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Três fotos de despedida: pilcha no pampa, tiara do Brasil e ônibus">
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🧉 Tchau, Brasil! Festa de despedida 🇧🇷">
+<meta name="twitter:description" content="Sábado, 3 de outubro · 20h30 · SANDO, Porto Alegre">
+<meta name="twitter:image" content="https://stevietheturtle.github.io/tchau-brasil/og-image.jpg">
+<!-- event details for Google and calendar-aware apps -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Tchau, Brasil! Festa de despedida",
+  "description": "Um até logo à PUCRS, a Porto Alegre e ao Rio Grande do Sul.",
+  "startDate": "2026-10-03T20:30:00-03:00",
+  "endDate": "2026-10-04T02:00:00-03:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "image": ["https://stevietheturtle.github.io/tchau-brasil/og-image.jpg"],
+  "url": "https://stevietheturtle.github.io/tchau-brasil/",
+  "inLanguage": "pt-BR",
+  "isAccessibleForFree": true,
+  "location": {
+    "@type": "Place",
+    "name": "SANDO",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Independência, 1211, loja 28 (Galeria Moinhos de Vento)",
+      "addressLocality": "Porto Alegre",
+      "addressRegion": "RS",
+      "postalCode": "90035-077",
+      "addressCountry": "BR"
+    }
+  }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&family=Archivo:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap">
@@ -393,6 +450,7 @@ function setUI(){
 }
 if(ac){
   ac.onstatechange=setUI;
+  if('mediaSession' in navigator){ try{ navigator.mediaSession.metadata=new MediaMetadata({title:'Palco',artist:'Gilberto Gil',album:'Tchau, Brasil! · Festa 03/10',artwork:[{src:'icon-512.png',sizes:'512x512',type:'image/png'},{src:'apple-touch-icon.png',sizes:'180x180',type:'image/png'}]}); }catch(e){} }
   fetch('palco.mp3').then(r=>r.arrayBuffer()).then(b=>ac.decodeAudioData(b)).then(buf=>{
     const g=ac.createGain(); g.gain.value=.8; g.connect(ac.destination);
     src=ac.createBufferSource(); src.buffer=buf; src.loop=true;
