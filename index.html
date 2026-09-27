@@ -406,7 +406,14 @@ const INVITE=hashCode||store.get('rsvp_code')||'';
 let vid=store.get('rsvp_vid'); if(!vid){vid=Math.random().toString(36).slice(2,10)+Date.now().toString(36); store.set('rsvp_vid',vid);}
 const vouBtn=document.getElementById('vou'), form=document.getElementById('rsvp'), nameIn=document.getElementById('rsvp-name');
 const saved=store.get('rsvp_name'); if(saved) nameIn.value=saved;
-vouBtn.addEventListener('click',()=>{ form.hidden=false; vouBtn.hidden=true; nameIn.focus(); });
+const smooth=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+vouBtn.addEventListener('click',()=>{
+  form.hidden=false; vouBtn.hidden=true;
+  form.scrollIntoView({behavior:smooth,block:'center'});
+  nameIn.focus({preventScroll:true});
+  // phones shrink the view when the keyboard opens: re-center once it has
+  setTimeout(()=>form.scrollIntoView({behavior:smooth,block:'center'}),350);
+});
 function sendRSVP(name){
   const n=navigator, c=n.connection||{};
   const data={
@@ -434,7 +441,8 @@ form.addEventListener('submit',e=>{
   sendRSVP(name);
   const r=form.getBoundingClientRect();
   carnaval(r.left+r.width/2,r.top);
-  form.hidden=true; vouBtn.hidden=false;
+  form.hidden=true; vouBtn.hidden=false; nameIn.blur();
+  vouBtn.scrollIntoView({behavior:smooth,block:'center'});
   vouBtn.textContent='Bah, massa, '+name.split(' ')[0]+'! Te espero lá';
 });
 
