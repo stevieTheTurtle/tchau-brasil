@@ -1,3 +1,8 @@
+/**
+ * @OnlyCurrentDoc
+ * Limits this script's Google permission to the one spreadsheet it is attached to
+ * (no access to your other Sheets, Drive files, Gmail, etc.).
+ */
 // Google Apps Script backend for the "Eu vou!" RSVP button.
 // Setup: Google Sheet -> Extensions -> Apps Script -> paste this -> Save.
 //   Project Settings (gear) -> Script properties -> add INVITE_CODE = the code you put after # in the shared link.
