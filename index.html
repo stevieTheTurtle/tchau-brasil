@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>🧉 Tchau, Brasil!</title>
-<meta name="description" content="🧉 Festa de despedida · Sábado, 3 de outubro, 20h30 até fechar · SANDO, Av. Independência 1211, Porto Alegre 🇧🇷">
+<meta name="description" content="🧉 Festa de despedida · ⛈️ NOVO LOCAL E HORÁRIO: Sábado, 3 de outubro, 19h · R. Vasco da Gama 542, Rio Branco, Porto Alegre 🇧🇷">
 <meta name="author" content="stevieTheTurtle">
 <meta name="theme-color" content="#0b3d24">
 <meta name="color-scheme" content="dark">
@@ -24,7 +24,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:url" content="https://stevietheturtle.github.io/tchau-brasil/">
 <meta property="og:title" content="🧉 Tchau, Brasil! Festa de despedida 🇧🇷">
-<meta property="og:description" content="Sábado, 3 de outubro · 20h30 até fechar · SANDO, Porto Alegre. Bah, tchê, bora!">
+<meta property="og:description" content="⛈️ Novo local por causa da chuva! Sábado, 3 de outubro · 19h · R. Vasco da Gama 542, Rio Branco, Porto Alegre.">
 <meta property="og:image" content="https://stevietheturtle.github.io/tchau-brasil/og-bus.jpg">
 <meta property="og:image:secure_url" content="https://stevietheturtle.github.io/tchau-brasil/og-bus.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -34,7 +34,7 @@
 <!-- X / Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="🧉 Tchau, Brasil! Festa de despedida 🇧🇷">
-<meta name="twitter:description" content="Sábado, 3 de outubro · 20h30 · SANDO, Porto Alegre">
+<meta name="twitter:description" content="⛈️ Novo local: Sábado, 3 de outubro · 19h · R. Vasco da Gama 542, Porto Alegre">
 <meta name="twitter:image" content="https://stevietheturtle.github.io/tchau-brasil/og-bus.jpg">
 <!-- event details for Google and calendar-aware apps -->
 <script type="application/ld+json">
@@ -43,7 +43,7 @@
   "@type": "Event",
   "name": "Tchau, Brasil! Festa de despedida",
   "description": "Um até logo à PUCRS, a Porto Alegre e ao Rio Grande do Sul.",
-  "startDate": "2026-10-03T20:30:00-03:00",
+  "startDate": "2026-10-03T19:00:00-03:00",
   "endDate": "2026-10-04T02:00:00-03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -53,13 +53,13 @@
   "isAccessibleForFree": true,
   "location": {
     "@type": "Place",
-    "name": "SANDO",
+    "name": "R. Vasco da Gama, 542",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Av. Independência, 1211, loja 28 (Galeria Moinhos de Vento)",
+      "streetAddress": "R. Vasco da Gama, 542 - Rio Branco",
       "addressLocality": "Porto Alegre",
       "addressRegion": "RS",
-      "postalCode": "90035-077",
+      "postalCode": "90420-110",
       "addressCountry": "BR"
     }
   }
@@ -148,6 +148,17 @@ h1{
 }
 
 /* ticket */
+.rain{max-width:640px; margin:40px auto 0; background:var(--vermelho); color:#fff; border-radius:6px; padding:16px 20px;
+  display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center; box-shadow:0 12px 28px rgba(0,0,0,.35);
+  border:3px dashed rgba(255,255,255,.7)}
+.rain + .ticket{margin-top:18px}
+.rain-ico{font-size:40px; line-height:1; animation:storm 1.6s ease-in-out infinite}
+@keyframes storm{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) rotate(-6deg)}}
+.rain-t{font-family:var(--display); font-size:clamp(19px,3.6vw,26px); line-height:1.15; text-wrap:balance}
+.rain-old{font-weight:600; font-size:15px; margin-top:4px; opacity:.95}
+.rain-old s{text-decoration-thickness:2px}
+.big .new{background:var(--vermelho); color:#fff; padding:0 .2em; border-radius:4px; box-decoration-break:clone; -webkit-box-decoration-break:clone}
+@media (prefers-reduced-motion:reduce){ .rain-ico{animation:none} }
 .ticket{
   margin:40px auto 0; max-width:640px; background:var(--amarelo); color:var(--ink);
   border-radius:6px; position:relative; display:grid; grid-template-columns:1fr; overflow:hidden;
@@ -258,24 +269,31 @@ body.carnaval .ticket{animation:pulseT .35s ease-in-out 6 alternate}
     <p class="sub">Bah, tchê! Depois de tanto chimarrão, churrasco, pesquisa, amizades e amores, chegou a hora de um até logo à <b>PUCRS</b>, a <b>Porto Alegre</b> e ao <b>Rio Grande do Sul</b>.</p>
   </header>
 
+  <div class="rain" role="alert">
+    <div class="rain-ico" aria-hidden="true">⛈️</div>
+    <div>
+      <div class="rain-t">Vai chover muito! Mudamos de lugar e de horário</div>
+      <div class="rain-old">Não é mais no <s>SANDO às 20h30</s></div>
+    </div>
+  </div>
   <section class="ticket" aria-label="Detalhes">
     <div class="row">
-      <div class="lab" aria-label="Quando">🕗</div>
+      <div class="lab" aria-label="Quando">🕖</div>
       <div>
-        <div class="big">Sábado, 3 de outubro · 20h30</div>
+        <div class="big">Sábado, 3 de outubro · <span class="new">19h00</span></div>
         <div class="small">até fechar · until late</div>
       </div>
     </div>
     <div class="row">
       <div class="lab" aria-label="Onde">📍</div>
       <div>
-        <div class="big">SANDO</div>
-        <div class="small">Av. Independência 1211, loja 28 · Galeria Moinhos de Vento, Porto Alegre</div>
+        <div class="big"><span class="new">R. Vasco da Gama, 542</span></div>
+        <div class="small">Rio Branco, Porto Alegre · 90420-110</div>
       </div>
     </div>
     <div class="actions">
-      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=SANDO%2C%20Av.%20Independ%C3%AAncia%201211%2C%20Porto%20Alegre" target="_blank" rel="noopener">Abrir no Maps</a>
-      <a class="btn green" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tchau%2C%20Brasil!%20Festa%20de%20despedida&dates=20261003T233000Z/20261004T050000Z&location=SANDO%2C%20Av.%20Independ%C3%AAncia%201211%2C%20Porto%20Alegre" target="_blank" rel="noopener">Salvar na agenda</a>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=R.%20Vasco%20da%20Gama%2C%20542%20-%20Rio%20Branco%2C%20Porto%20Alegre%20-%20RS%2C%2090420-110" target="_blank" rel="noopener">Abrir no Maps</a>
+      <a class="btn green" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tchau%2C%20Brasil!%20Festa%20de%20despedida&dates=20261003T220000Z/20261004T050000Z&location=R.%20Vasco%20da%20Gama%2C%20542%20-%20Rio%20Branco%2C%20Porto%20Alegre%20-%20RS%2C%2090420-110" target="_blank" rel="noopener">Salvar na agenda</a>
     </div>
   </section>
 
